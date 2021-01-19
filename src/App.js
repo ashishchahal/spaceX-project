@@ -1,56 +1,54 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import Home from "./Components/Home";
+import History from "./Containers/HistoryContainer";
+import Header from "./Components/Header";
 
 function App() {
+  const [spaceData, setSpaceData] = useState([]);
+  const [spacePayload, setPayload] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  // useEffect(() => {
+  //   const fetchSpaceData = async () => {
+  //     setLoading(true);
+
+  //     fetch("https://api.spacexdata.com/v3/history")
+  //       .then((res) => {
+  //         return res.json();
+  //       })
+  //       .then((data) => setSpaceData(data))
+  //       .catch((error) => console.log(error));
+  //     setLoading(false);
+  //   };
+
+  //   fetchSpaceData();
+  // }, []);
+
+  // useEffect(() => {
+  //   fetch("https://api.spacexdata.com/v3/payloads")
+  //     .then((res) => res.json())
+  //     .then((data) => setPayload(data))
+  //     .catch((error) => console.log(error));
+  // }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+    <div className="app">
+      {/* Header */}
+      <Header />
+      {/* Home */}
+      <div className="spacex-history">
+        <History spaceData={spaceData} loading={loading} />
+      </div>
+
+      <Home />
+      <br />
+      <div className="__spacex-payload">
+        <ul>
+          {spacePayload && spacePayload.map((item) => <li>{item.orbit}</li>)}
+        </ul>
+      </div>
+      {/* Footer */}
     </div>
   );
 }
